@@ -1,0 +1,21 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation project(":data")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "javax.inject:javax.inject:1"
+    implementation("com.squareup.retrofit2:retrofit:2.3.0") {
+        exclude module: 'okhttp'
+    }
+    implementation "com.squareup.retrofit2:converter-moshi:2.3.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.5.0"
+    implementation "com.squareup.moshi:moshi-adapters:1.5.0"
+    implementation "com.squareup.okhttp3:okhttp:3.8.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.8.1"
+    implementation "io.reactivex.rxjava2:rxjava:2.1.10"
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
