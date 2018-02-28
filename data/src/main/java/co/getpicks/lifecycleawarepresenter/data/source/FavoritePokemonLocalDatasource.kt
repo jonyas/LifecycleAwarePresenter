@@ -9,4 +9,6 @@ interface FavoritePokemonLocalDatasource {
 
     fun setPokemonIdAsFavorite(id: Int): Completable
 
+    fun removePokemonIdFromFavorites(id: Int): Completable
+
 }

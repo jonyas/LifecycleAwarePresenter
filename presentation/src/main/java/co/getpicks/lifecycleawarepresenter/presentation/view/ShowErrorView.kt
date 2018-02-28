@@ -1,4 +1,4 @@
-package co.getpicks.lifecycleawarepresenter.view
+package co.getpicks.lifecycleawarepresenter.presentation.view
 
 interface ShowErrorView {
 

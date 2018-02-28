@@ -2,9 +2,9 @@ package co.getpicks.lifecycleawarepresenter.di
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import co.getpicks.lifecycleawarepresenter.presenter.FavoritePokemonSubPresenter
-import co.getpicks.lifecycleawarepresenter.presenter.FavoritePokemonSubPresenterImpl
-import co.getpicks.lifecycleawarepresenter.presenter.PokemonListActivityPresenter
+import co.getpicks.lifecycleawarepresenter.presentation.presenter.FavoritePokemonSubPresenter
+import co.getpicks.lifecycleawarepresenter.presentation.presenter.FavoritePokemonSubPresenterImpl
+import co.getpicks.lifecycleawarepresenter.presentation.presenter.PokemonListActivityPresenter
 import co.getpicks.lifecycleawarepresenter.presentation.ViewModelFactory
 import dagger.Binds
 import dagger.MapKey

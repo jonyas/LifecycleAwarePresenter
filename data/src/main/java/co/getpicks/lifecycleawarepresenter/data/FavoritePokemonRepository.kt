@@ -12,4 +12,6 @@ class FavoritePokemonRepository
 
     fun setPokemonIdAsFavorite(id: Int): Completable = favoritePokemonLocalDatasource.setPokemonIdAsFavorite(id)
 
+    fun removePokemonIdFromFavorites(id: Int): Completable = favoritePokemonLocalDatasource.removePokemonIdFromFavorites(id)
+
 }

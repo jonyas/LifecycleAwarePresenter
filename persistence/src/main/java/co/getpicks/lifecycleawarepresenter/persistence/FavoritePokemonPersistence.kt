@@ -11,7 +11,6 @@ class FavoritePokemonPersistence
 @Inject constructor(
         sharedPreferences: SharedPreferences
 ) : FavoritePokemonLocalDatasource {
-
     private companion object {
         const val PREF_FAV_POKEMON: String = "favorite_pokemon"
     }
@@ -21,15 +20,21 @@ class FavoritePokemonPersistence
     override fun loadFavoritePokemonIds(): Observable<Set<Int>> {
         return rxSharedPreferences.getStringSet(PREF_FAV_POKEMON, emptySet())
                 .asObservable()
-                .map {
-                    it.map { it.toInt() }.toSet()
-                }
+                .map { it.map { it.toInt() }.toSet() }
     }
 
     override fun setPokemonIdAsFavorite(id: Int): Completable {
         return Completable.fromAction {
             with(rxSharedPreferences.getStringSet(PREF_FAV_POKEMON, mutableSetOf<String>())) {
                 set(get().apply { add(id.toString()) })
+            }
+        }
+    }
+
+    override fun removePokemonIdFromFavorites(id: Int): Completable {
+        return Completable.fromAction {
+            with(rxSharedPreferences.getStringSet(PREF_FAV_POKEMON, mutableSetOf<String>())) {
+                set(get().apply { remove(id.toString()) })
             }
         }
     }
