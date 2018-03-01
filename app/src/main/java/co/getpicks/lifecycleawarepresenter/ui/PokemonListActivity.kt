@@ -17,7 +17,6 @@ import co.getpicks.lifecycleawarepresenter.utils.show
 
 class PokemonListActivity :
         BasePresenterActivity<PokemonListActivityPresenter, PokemonListActivityView>(), PokemonListActivityView {
-
     override val presenterClass = PokemonListActivityPresenter::class.java
 
     private val progressBar: ProgressBar by bindView(R.id.activity_pokemonlist_progressbar)
@@ -27,7 +26,7 @@ class PokemonListActivity :
             { presenter.removePokemonFromFavorites(it) }
     )
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokemonlist)
         with(recyclerView) {
@@ -46,12 +45,16 @@ class PokemonListActivity :
         Toast.makeText(this, "Error: ${t.message}", Toast.LENGTH_LONG).show()
     }
 
-    override fun onPokemonAddedToFavorites(pokemonUI: PokemonUI) {
-        pokemonAdapter.notifyItemChanged(pokemonUI)
+    override fun onAddingPokemonToFavoritesFailed(pokemonUI: PokemonUI, t: Throwable) {
+        Toast.makeText(this, "Error adding to favs: ${t.message}", Toast.LENGTH_LONG).show()
+        // Render whole list again, the isFavorite has been reverted to previous value
+        pokemonAdapter.notifyDataSetChanged()
     }
 
-    override fun onPokemonRemovedFromFavorites(pokemonUI: PokemonUI) {
-        pokemonAdapter.notifyItemChanged(pokemonUI)
+    override fun onRemovingPokemonFromFavoritesFailed(pokemonUI: PokemonUI, t: Throwable) {
+        Toast.makeText(this, "Error adding from favs: ${t.message}", Toast.LENGTH_LONG).show()
+        // Render whole list again, the isFavorite has been reverted to previous value
+        pokemonAdapter.notifyDataSetChanged()
     }
 
 }

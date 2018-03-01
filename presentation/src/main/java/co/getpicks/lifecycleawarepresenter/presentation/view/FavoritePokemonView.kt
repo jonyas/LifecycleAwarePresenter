@@ -3,10 +3,10 @@ package co.getpicks.lifecycleawarepresenter.presentation.view
 import co.getpicks.lifecycleawarepresenter.presentation.PokemonUI
 import co.getpicks.lifecycleawarepresenter.presentation.base.BaseView
 
-interface FavoritePokemonView : ShowErrorView, BaseView {
+interface FavoritePokemonView : BaseView {
 
-    fun onPokemonAddedToFavorites(pokemonUI: PokemonUI)
+    fun onAddingPokemonToFavoritesFailed(pokemonUI: PokemonUI, t: Throwable)
 
-    fun onPokemonRemovedFromFavorites(pokemonUI: PokemonUI)
+    fun onRemovingPokemonFromFavoritesFailed(pokemonUI: PokemonUI, t: Throwable)
 
 }

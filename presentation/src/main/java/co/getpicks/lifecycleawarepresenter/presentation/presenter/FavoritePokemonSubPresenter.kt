@@ -24,27 +24,37 @@ class FavoritePokemonSubPresenterImpl
 ) : BaseSubPresenterImpl<FavoritePokemonView>(disposables), FavoritePokemonSubPresenter {
 
     override fun markPokemonAsFavorite(pokemonUI: PokemonUI) {
-        pokemonUI.isFavorite = true
         disposables.add(
                 Single.just(pokemonUI)
-                        .map { Pokemon(it.id, it.name, it.image, it.isFavorite) }
+                        .map { Pokemon(it.id, it.name, it.image, true) }
                         .flatMapCompletable { pokemon -> addPokemonToFavoritesUseCase.addPokemonToFavorites(pokemon) }
                         .subscribe(
-                                { subPresenterView?.onPokemonAddedToFavorites(pokemonUI) },
-                                { t: Throwable -> subPresenterView?.showError(t) }
+                                {
+                                    // nothing to do. UI should update by itself when
+                                    // data stream detects that value has changed
+                                },
+                                { t: Throwable ->
+                                    pokemonUI.isFavorite = false
+                                    subPresenterView?.onAddingPokemonToFavoritesFailed(pokemonUI, t)
+                                }
                         )
         )
     }
 
     override fun removePokemonFromFavorites(pokemonUI: PokemonUI) {
-        pokemonUI.isFavorite = false
         disposables.add(
                 Single.just(pokemonUI)
-                        .map { Pokemon(it.id, it.name, it.image, it.isFavorite) }
+                        .map { Pokemon(it.id, it.name, it.image, false) }
                         .flatMapCompletable { pokemon -> removePokemonFromFavoritesUseCase.removePokemonFromFavorites(pokemon) }
                         .subscribe(
-                                { subPresenterView?.onPokemonRemovedFromFavorites(pokemonUI) },
-                                { t: Throwable -> subPresenterView?.showError(t) }
+                                {
+                                    // nothing to do. UI should update by itself when
+                                    // data stream detects that value has changed
+                                },
+                                { t: Throwable ->
+                                    pokemonUI.isFavorite = true
+                                    subPresenterView?.onRemovingPokemonFromFavoritesFailed(pokemonUI, t)
+                                }
                         )
         )
     }
