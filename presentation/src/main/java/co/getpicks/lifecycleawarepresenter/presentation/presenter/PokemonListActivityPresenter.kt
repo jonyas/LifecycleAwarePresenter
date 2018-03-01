@@ -39,9 +39,15 @@ class PokemonListActivityPresenter
 
     private fun renderState(state: BasePresenterStateValue?) {
         when (state) {
-            is PresenterStateValue.Failure -> view?.showError(state.throwable)
+            is PresenterStateValue.Failure -> {
+                view?.hideProgress()
+                view?.showError(state.throwable)
+            }
             PresenterStateValue.InProgress -> view?.showProgress()
-            is PresenterStateValue.Idle -> state.loadedData?.let { view?.showAllPokemon(it) }
+            is PresenterStateValue.Idle -> {
+                view?.hideProgress()
+                state.loadedData?.let { view?.showAllPokemon(it) }
+            }
         }
     }
 

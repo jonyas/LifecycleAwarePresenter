@@ -26,7 +26,7 @@ class FavoritePokemonPersistence
     override fun setPokemonIdAsFavorite(id: Int): Completable {
         return Completable.fromAction {
             with(rxSharedPreferences.getStringSet(PREF_FAV_POKEMON, mutableSetOf<String>())) {
-                set(get().apply { add(id.toString()) })
+                set(get().toMutableSet().apply { add(id.toString()) })
             }
         }
     }
@@ -34,7 +34,7 @@ class FavoritePokemonPersistence
     override fun removePokemonIdFromFavorites(id: Int): Completable {
         return Completable.fromAction {
             with(rxSharedPreferences.getStringSet(PREF_FAV_POKEMON, mutableSetOf<String>())) {
-                set(get().apply { remove(id.toString()) })
+                set(get().toMutableSet().apply { remove(id.toString()) })
             }
         }
     }
