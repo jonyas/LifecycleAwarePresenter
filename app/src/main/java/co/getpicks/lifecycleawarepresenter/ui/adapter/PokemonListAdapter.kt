@@ -1,6 +1,7 @@
 package co.getpicks.lifecycleawarepresenter.ui.adapter
 
 import android.os.Bundle
+import android.support.annotation.DrawableRes
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -39,11 +40,7 @@ constructor(
             holder.holdingPokemon = pokemons[position]
             holder.holdingPokemon.isFavorite = o.getBoolean(KEY_IS_FAVORITE)
             holder.favoritePokemonImageView.setImageResource(
-                    if (holder.holdingPokemon.isFavorite) {
-                        R.drawable.ic_favorite_black_24dp
-                    } else {
-                        R.drawable.ic_favorite_border_black_24dp
-                    }
+                    getFavImageResourceForPokemonState(holder.holdingPokemon)
             )
         }
     }
@@ -101,10 +98,15 @@ constructor(
 
         init {
             favoritePokemonImageView.setOnClickListener {
-                if (!holdingPokemon.isFavorite)
+                holdingPokemon.isFavorite = !holdingPokemon.isFavorite
+                favoritePokemonImageView.setImageResource(
+                        getFavImageResourceForPokemonState(holdingPokemon)
+                )
+                if (holdingPokemon.isFavorite) {
                     onPokemonAddedToFavorites(holdingPokemon)
-                else
+                } else {
                     onPokemonRemovedFromFavorites(holdingPokemon)
+                }
             }
         }
 
@@ -115,11 +117,16 @@ constructor(
         pokemonImageView.load(pokemonUI.image)
         pokemonNameTextView.text = pokemonUI.name
         favoritePokemonImageView.setImageResource(
-                if (pokemonUI.isFavorite) {
-                    R.drawable.ic_favorite_black_24dp
-                } else {
-                    R.drawable.ic_favorite_border_black_24dp
-                }
+                getFavImageResourceForPokemonState(pokemonUI)
         )
+    }
+
+    @DrawableRes
+    private fun getFavImageResourceForPokemonState(pokemonUI: PokemonUI): Int {
+        return if (pokemonUI.isFavorite) {
+            R.drawable.ic_favorite_black_24dp
+        } else {
+            R.drawable.ic_favorite_border_black_24dp
+        }
     }
 }
