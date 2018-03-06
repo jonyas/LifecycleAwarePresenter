@@ -5,10 +5,9 @@ import co.getpicks.lifecycleawarepresenter.presentation.PokemonUI
 import co.getpicks.lifecycleawarepresenter.presentation.base.*
 import co.getpicks.lifecycleawarepresenter.presentation.view.PokemonListActivityView
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 class PokemonListActivityPresenter
-@Inject constructor(
+constructor(
         pokemonUseCase: LoadAllPokemonUseCase,
         favPokemonSubPresenter: FavoritePokemonSubPresenter,
         disposables: CompositeDisposable

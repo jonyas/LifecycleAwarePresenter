@@ -1,12 +1,11 @@
 package co.getpicks.lifecycleawarepresenter.remote
 
 import co.getpicks.lifecycleawarepresenter.data.PokemonData
-import io.reactivex.Single
 import co.getpicks.lifecycleawarepresenter.data.source.PokemonRemoteDatasource
-import javax.inject.Inject
+import io.reactivex.Single
 
 class PokemonApi
-@Inject constructor(
+constructor(
         private val restApi: PokemonRestApi
 ) : PokemonRemoteDatasource {
 

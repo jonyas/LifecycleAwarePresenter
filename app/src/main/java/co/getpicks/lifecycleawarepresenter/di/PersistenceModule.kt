@@ -1,14 +1,22 @@
 package co.getpicks.lifecycleawarepresenter.di
 
-import dagger.Binds
-import dagger.Module
-import co.getpicks.lifecycleawarepresenter.data.source.FavoritePokemonLocalDatasource
-import co.getpicks.lifecycleawarepresenter.persistence.FavoritePokemonPersistence
+import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
+import com.github.salomonbrys.kodein.Kodein
+import com.github.salomonbrys.kodein.bind
+import com.github.salomonbrys.kodein.factory
+import com.github.salomonbrys.kodein.provider
 
-@Module
-abstract class PersistenceModule {
+class PersistenceModule {
+    companion object {
+        fun persistenceModule(ctx: Context) = Kodein.Module {
 
-    @Binds
-    abstract fun bindFavoritePokemonDatasource(impl: FavoritePokemonPersistence): FavoritePokemonLocalDatasource
+            bind<SharedPreferences>() with
+                    factory { ctx: Context -> PreferenceManager.getDefaultSharedPreferences(ctx) }
 
+            bind<SharedPreferences>() with
+                    provider { factory<Context, SharedPreferences>().invoke(ctx) }
+        }
+    }
 }

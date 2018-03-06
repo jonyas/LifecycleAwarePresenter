@@ -1,24 +1,20 @@
 package co.getpicks.lifecycleawarepresenter.di
 
-import co.getpicks.lifecycleawarepresenter.data.source.PokemonRemoteDatasource
 import co.getpicks.lifecycleawarepresenter.remote.PokemonApi
 import co.getpicks.lifecycleawarepresenter.remote.PokemonRestApi
 import co.getpicks.lifecycleawarepresenter.remote.PokemonRestApiBuilder
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
+import com.github.salomonbrys.kodein.*
 
-@Module
-abstract class RemoteModule {
-
-    @Binds
-    abstract fun bindPokemonRemoteDatasource(pokemonApi: PokemonApi): PokemonRemoteDatasource
-
-    @Module
+class RemoteModule {
     companion object {
-        @Provides
-        @JvmStatic
-        fun providePokemonRestApi(): PokemonRestApi = PokemonRestApiBuilder.build("http://pokeapi.co/api/v2/")
-    }
+        val remoteModule = Kodein.Module {
+            constant("pokemonBaseUrl") with "http://pokeapi.co/api/v2/"
 
+            bind<PokemonRestApi>() with
+                    provider { PokemonRestApiBuilder.build(instance("pokemonBaseUrl")) }
+
+            bind<PokemonApi>() with
+                    provider { PokemonApi(instance()) }
+        }
+    }
 }

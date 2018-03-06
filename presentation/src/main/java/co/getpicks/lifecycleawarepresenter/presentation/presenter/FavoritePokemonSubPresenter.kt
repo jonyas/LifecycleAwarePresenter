@@ -9,7 +9,6 @@ import co.getpicks.lifecycleawarepresenter.presentation.base.BaseSubPresenterImp
 import co.getpicks.lifecycleawarepresenter.presentation.view.FavoritePokemonView
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 interface FavoritePokemonSubPresenter : BaseSubPresenter<FavoritePokemonView> {
     fun markPokemonAsFavorite(pokemonUI: PokemonUI)
@@ -17,7 +16,7 @@ interface FavoritePokemonSubPresenter : BaseSubPresenter<FavoritePokemonView> {
 }
 
 class FavoritePokemonSubPresenterImpl
-@Inject constructor(
+constructor(
         disposables: CompositeDisposable,
         private val addPokemonToFavoritesUseCase: AddPokemonToFavoritesUseCase,
         private val removePokemonFromFavoritesUseCase: RemovePokemonFromFavoritesUseCase

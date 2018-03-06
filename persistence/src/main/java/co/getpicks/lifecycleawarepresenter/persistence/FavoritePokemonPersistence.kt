@@ -1,14 +1,13 @@
 package co.getpicks.lifecycleawarepresenter.persistence
 
 import android.content.SharedPreferences
+import co.getpicks.lifecycleawarepresenter.data.source.FavoritePokemonLocalDatasource
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.reactivex.Completable
 import io.reactivex.Observable
-import co.getpicks.lifecycleawarepresenter.data.source.FavoritePokemonLocalDatasource
-import javax.inject.Inject
 
 class FavoritePokemonPersistence
-@Inject constructor(
+constructor(
         sharedPreferences: SharedPreferences
 ) : FavoritePokemonLocalDatasource {
     private companion object {

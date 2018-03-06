@@ -6,14 +6,13 @@ import co.getpicks.lifecycleawarepresenter.data.PokemonRepository
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.functions.BiFunction
-import javax.inject.Inject
 
 class LoadAllPokemonUseCase
-@Inject constructor(
+constructor(
         private val pokemonRepository: PokemonRepository,
         private val favoritePokemonRepository: FavoritePokemonRepository,
-        @IoThread private val subscribeOn: Scheduler,
-        @MainThread private val observeOn: Scheduler
+        private val subscribeOn: Scheduler,
+        private val observeOn: Scheduler
 ) {
 
     fun loadAllPokemon(): Observable<List<Pokemon>> {

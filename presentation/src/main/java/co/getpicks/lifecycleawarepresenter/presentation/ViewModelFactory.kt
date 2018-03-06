@@ -2,31 +2,29 @@ package co.getpicks.lifecycleawarepresenter.presentation
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import javax.inject.Inject
-import javax.inject.Provider
 
 class ViewModelFactory
-@Inject constructor(
-        private val creators: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
+constructor(
+        private val creators: Map<Class<out ViewModel>, ViewModel>
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        var creator: Provider<out ViewModel>? = creators[modelClass]
-        if (creator == null) {
+        var viewModel: ViewModel? = creators[modelClass]
+        if (viewModel == null) {
             for ((key, value) in creators.entries) {
                 if (modelClass.isAssignableFrom(key)) {
-                    creator = value
+                    viewModel = value
                     break
                 }
             }
         }
-        if (creator == null) {
+        if (viewModel == null) {
             throw IllegalArgumentException("Unknown model class $modelClass")
         }
         try {
-            return creator.get() as T
+            return viewModel as T
         } catch (e: ClassCastException) {
-            throw ClassCastException("${creator.get()} cannot be cast!")
+            throw ClassCastException("$viewModel cannot be cast!")
         }
     }
 }

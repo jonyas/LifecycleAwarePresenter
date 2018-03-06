@@ -4,7 +4,6 @@ dependencies {
     implementation project(":data")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "javax.inject:javax.inject:1"
     implementation("com.squareup.retrofit2:retrofit:2.3.0") {
         exclude module: 'okhttp'
     }
