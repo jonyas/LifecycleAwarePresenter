@@ -6,6 +6,8 @@ import co.getpicks.lifecycleawarepresenter.presentation.presenter.FavoritePokemo
 import co.getpicks.lifecycleawarepresenter.presentation.presenter.FavoritePokemonSubPresenterImpl
 import co.getpicks.lifecycleawarepresenter.presentation.presenter.PokemonListActivityPresenter
 import co.getpicks.lifecycleawarepresenter.presentation.ViewModelFactory
+import co.getpicks.lifecycleawarepresenter.presentation.viewmodel.FavoritePokemonViewModel
+import co.getpicks.lifecycleawarepresenter.presentation.viewmodel.PokemonListViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -29,7 +31,17 @@ abstract class PresentationModule {
     @Binds
     @IntoMap
     @ViewModelKey(PokemonListActivityPresenter::class)
-    abstract fun bindAuthenticationViewModel(viewModel: PokemonListActivityPresenter): ViewModel
+    abstract fun bindPokemonListActivityPresenter(viewModel: PokemonListActivityPresenter): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PokemonListViewModel::class)
+    abstract fun bindPokemonListViewModel(viewModel: PokemonListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoritePokemonViewModel::class)
+    abstract fun bindFavoritePokemonViewModel(viewModel: FavoritePokemonViewModel): ViewModel
 
     @Binds
     abstract fun bindFavoritePokemonSubPresenter(favoritePokemonSubPresenter: FavoritePokemonSubPresenterImpl): FavoritePokemonSubPresenter

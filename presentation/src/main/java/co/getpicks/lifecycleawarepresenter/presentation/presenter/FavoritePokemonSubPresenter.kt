@@ -24,15 +24,13 @@ class FavoritePokemonSubPresenterImpl
 ) : BaseSubPresenterImpl<FavoritePokemonView>(disposables), FavoritePokemonSubPresenter {
 
     override fun markPokemonAsFavorite(pokemonUI: PokemonUI) {
+        pokemonUI.isFavorite = true
         disposables.add(
                 Single.just(pokemonUI)
                         .map { Pokemon(it.id, it.name, it.image, true) }
                         .flatMapCompletable { pokemon -> addPokemonToFavoritesUseCase.addPokemonToFavorites(pokemon) }
                         .subscribe(
-                                {
-                                    // nothing to do. UI should update by itself when
-                                    // data stream detects that value has changed
-                                },
+                                { subPresenterView?.onPokemonAddedToFavorites(pokemonUI) },
                                 { t: Throwable ->
                                     pokemonUI.isFavorite = false
                                     subPresenterView?.onAddingPokemonToFavoritesFailed(pokemonUI, t)
@@ -42,15 +40,13 @@ class FavoritePokemonSubPresenterImpl
     }
 
     override fun removePokemonFromFavorites(pokemonUI: PokemonUI) {
+        pokemonUI.isFavorite = false
         disposables.add(
                 Single.just(pokemonUI)
                         .map { Pokemon(it.id, it.name, it.image, false) }
                         .flatMapCompletable { pokemon -> removePokemonFromFavoritesUseCase.removePokemonFromFavorites(pokemon) }
                         .subscribe(
-                                {
-                                    // nothing to do. UI should update by itself when
-                                    // data stream detects that value has changed
-                                },
+                                { subPresenterView?.onPokemonRemovedFromFavorites(pokemonUI) },
                                 { t: Throwable ->
                                     pokemonUI.isFavorite = true
                                     subPresenterView?.onRemovingPokemonFromFavoritesFailed(pokemonUI, t)

@@ -1,5 +1,6 @@
 package co.getpicks.lifecycleawarepresenter.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,8 +16,10 @@ import co.getpicks.lifecycleawarepresenter.utils.bindView
 import co.getpicks.lifecycleawarepresenter.utils.go
 import co.getpicks.lifecycleawarepresenter.utils.show
 
-class PokemonListActivity :
+@SuppressLint("Registered")
+class PokemonListPresenterActivity :
         BasePresenterActivity<PokemonListActivityPresenter, PokemonListActivityView>(), PokemonListActivityView {
+
     override val presenterClass = PokemonListActivityPresenter::class.java
 
     private val progressBar: ProgressBar by bindView(R.id.activity_pokemonlist_progressbar)
@@ -31,7 +34,7 @@ class PokemonListActivity :
         setContentView(R.layout.activity_pokemonlist)
         with(recyclerView) {
             adapter = pokemonAdapter
-            layoutManager = LinearLayoutManager(this@PokemonListActivity)
+            layoutManager = LinearLayoutManager(this@PokemonListPresenterActivity)
         }
     }
 
@@ -45,15 +48,29 @@ class PokemonListActivity :
         Toast.makeText(this, "Error: ${t.message}", Toast.LENGTH_LONG).show()
     }
 
+    override fun onPokemonAddedToFavorites(pokemonUI: PokemonUI) {
+        // Render whole list again, we could simply find the position of the pokemon UI on the list
+        // and notify that item on the list
+        pokemonAdapter.notifyDataSetChanged()
+    }
+
+    override fun onPokemonRemovedFromFavorites(pokemonUI: PokemonUI) {
+        // Render whole list again, we could simply find the position of the pokemon UI on the list
+        // and notify that item on the list
+        pokemonAdapter.notifyDataSetChanged()
+    }
+
     override fun onAddingPokemonToFavoritesFailed(pokemonUI: PokemonUI, t: Throwable) {
         Toast.makeText(this, "Error adding to favs: ${t.message}", Toast.LENGTH_LONG).show()
-        // Render whole list again, the isFavorite has been reverted to previous value
+        // Render whole list again, we could simply find the position of the pokemon UI on the list
+        // and notify that item on the list
         pokemonAdapter.notifyDataSetChanged()
     }
 
     override fun onRemovingPokemonFromFavoritesFailed(pokemonUI: PokemonUI, t: Throwable) {
         Toast.makeText(this, "Error adding from favs: ${t.message}", Toast.LENGTH_LONG).show()
-        // Render whole list again, the isFavorite has been reverted to previous value
+        // Render whole list again, we could simply find the position of the pokemon UI on the list
+        // and notify that item on the list
         pokemonAdapter.notifyDataSetChanged()
     }
 

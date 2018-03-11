@@ -1,6 +1,7 @@
 package co.getpicks.lifecycleawarepresenter.di
 
-import co.getpicks.lifecycleawarepresenter.ui.PokemonListActivity
+import co.getpicks.lifecycleawarepresenter.ui.PokemonListPresenterActivity
+import co.getpicks.lifecycleawarepresenter.ui.PokemonListViewModelActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -8,6 +9,9 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
-    abstract fun contributePokemonListActivity(): PokemonListActivity
+    abstract fun contributePokemonListActivity(): PokemonListPresenterActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributePokemonListViewModelActivity(): PokemonListViewModelActivity
 
 }
